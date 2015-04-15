@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+	<title>{{ title }}</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300,800' rel='stylesheet' type='text/css'>
+	<style>
+		body {
+			font-family: 'Open Sans', sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<!-- Heading 1 -->
+	<h1>{{ h1 }}</h1>
+
+	<!-- Heading 2 -->
+	<h2>{{ h2 }}</h2>
+
+	<!-- Heading 3 -->
+	<h3>{{ h3 }}</h3>
+
+	<!-- Paragraph -->
+	<p>{{ p }}</p>
+
+	<!-- Bold text -->
+	<p><strong>{{ b }}</strong></p>
+
+	<!-- Italic text -->
+	<p><em>{{ i }}</em></p>
+
+	<!-- Small text -->
+	<p><small>{{ small }}</small></p>
+
+	{% if list is defined %}
+	<!-- Unordered list -->
+	<ul>
+		{% for item in list %}
+			<li>{{ item }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	<br>
+	<hr>
+
+	<strong>The code that renders the above actually looks like this:</strong>
+	<pre class="prettyprint">
+		&lt;h1>&#123;{ h1 }}&lt;/h1>
+
+		&lt;h2>&#123;{ h2 }}</h2>
+
+		&lt;h3>&#123;{ h3 }}&lt;/h3>
+
+		&lt;p>&#123;{ p }}&lt;/p>
+
+		&lt;p>&lt;strong>&#123;{ b }}&lt;/strong>&lt;/p>
+
+		&lt;p>&lt;em>&#123;{ i }}&lt;/em>&lt;/p>
+
+		&lt;p>&lt;small>&#123;{ small }}&lt;/small>&lt;/p>
+		{% if list is defined %}
+
+		&lt;!-- Notice this conditional. If no list variable is passed, this block of code will not show up in the source -->
+		&#123;% if list is defined %}
+		&lt;ul>
+			&#123;% for item in list %}
+				&lt;li>&#123;{ item }}&lt;/li>
+			&#123;% endfor %}
+		&lt;/ul>
+		&#123;% endif %}
+		{% endif %}
+	</pre>
+
+	{% if list is defined %}
+		You fill the template just by building an associative array of data like so:
+		<pre class="prettyprint">
+			// This is the unordered list we wish to render
+			$list = [
+				'Alpha',
+				'Beta',
+				'Gamma',
+				'Delta',
+				'Epsilon',
+				'Zeta',
+				'Eta',
+				'Theta'
+			];
+
+			// These are our template variables
+			$vars = [
+				'title' => "Demo With List", // You can see this as the page's title
+				'h1' => "This is a heading",
+				'h2' => "This also is a heading",
+				'h3' => "This is the smallest heading",
+				'p' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent placerat, libero a lacinia viverra, diam odio elementum justo, non egestas quam sem sit amet orci. Nullam rhoncus porta metus sit amet pulvinar. Vestibulum lobortis mauris nec tellus tempor sagittis. Phasellus finibus tempor gravida. Morbi laoreet ligula id nulla vestibulum eleifend. Donec vitae tellus a ipsum congue euismod vel vel lacus. Aliquam pellentesque elementum pharetra. Quisque id neque vel turpis finibus rutrum. Duis volutpat massa at metus faucibus sagittis. Etiam luctus, sem a tincidunt lobortis, nulla mi suscipit ex, vel ultrices eros orci et velit.',
+				'b' => "This is bold text.",
+				'i' => "This is italic text.",
+				'small' => "This is small text.",
+				'list' => $list
+			];
+		</pre>
+		...then pass that array to the Twig template renderer, along with the name of the template you wish to utilize
+		<pre class="prettyprint">
+			// This line goes in the PHP file you are loading for the user
+			echo $template->render('basic_html.html', $vars);
+		</pre>
+	{% else %}
+		You fill the template just by building an associative array of data like so:
+		<pre class="prettyprint">
+			// These are our template variables
+			$vars = [
+				'title' => "Twig Demo", // You can see this as the page's title
+				'h1' => "Heading 1",
+				'h2' => "Heading 2",
+				'h3' => "Heading 3",
+				'p' => "Paragraph",
+				'b' => "Bold",
+				'i' => "Italic",
+				'small' => "Small",
+			];
+		</pre>
+		...then pass that array to the Twig template renderer, along with the name of the template you wish to utilize
+		<pre class="prettyprint">
+			// This line goes in the PHP file you are loading for the user
+			echo $template->render('basic_html.html', $vars);
+		</pre>
+	{% endif %}
+	<br>
+	{% if list is defined %}
+	Visit this previous page to see the same template with different variables passed to it: <a href="app.php">&larr; previous page</a>
+	{% else %}
+	Visit this next page to see the same template with different variables passed to it: <a href="about.php">next page &rarr;</a>
+	{% endif %}
+
+	<!-- Scrips -->
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=css&skin=sunburst"></script>
+</body>
+</html>
